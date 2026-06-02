@@ -3,9 +3,15 @@ const multer = require("multer");
 const Music = require("../models/Music");
 const auth = require("../middleware/auth");
 
-const { storage } = require("../cloudConfig");
-const upload = multer({ storage });
+// Local Storage
+const storage = multer.diskStorage({
+  destination: "public/uploads",
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "_" + file.originalname);
+  }
+});
 
+const upload = multer({ storage });
 
 // Add Music Page
 router.get("/add", auth, (req, res) => {
@@ -22,23 +28,24 @@ router.post(
     { name: "thumbnail" }
   ]),
   async (req, res) => {
+    try {
+      const { title, singer, duration } = req.body;
 
-    const { title, singer, duration } = req.body;
+      await Music.create({
+        title,
+        singer,
+        duration,
+        audioFile: req.files.audio[0].filename,
+        thumbnail: req.files.thumbnail[0].filename,
+        createdBy: req.session.user._id
+      });
 
-    await Music.create({
-      title,
-      singer,
-      duration,
-
-      // Cloudinary URL
-     audioFile: req.files.audio[0].path,
-     thumbnail: req.files.thumbnail[0].path,
-
-      createdBy: req.session.user._id
-    });
-
-    req.flash("success", "Music Uploaded!");
-    res.redirect("/");
+      req.flash("success", "Music Uploaded!");
+      res.redirect("/");
+    } catch (err) {
+      console.log(err);
+      res.send("Upload Error");
+    }
   }
 );
 
