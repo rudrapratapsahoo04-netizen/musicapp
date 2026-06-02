@@ -28,18 +28,6 @@ router.get("/", async (req, res) => {
         res.send("Error loading home page");
     }
 });
-
-// Explore Page
-router.get("/explore", async (req, res) => {
-    try {
-        const music = await Music.find({});
-        res.render("explore", { music });
-    } catch (err) {
-        console.log(err);
-        res.send("Error loading explore page");
-    }
-});
-
 // Search Page
 router.get("/search", async (req, res) => {
     try {

@@ -10,7 +10,7 @@
       <div class="col-md-4">
         <div class="card shadow-sm mb-4 " style="border-radius: 60px;">
 
-          <img src="/uploads/<%= song.thumbnail %>"
+          <img src="<%= song.thumbnail %>" alt="<%= song.title %>"
                class="card-img-top " style="height:230px; object-fit:cover;" >
 
           <div class="card-body">
@@ -20,7 +20,7 @@
             <p>Singer: <%= song.singer %></p>
 
             <audio controls class="w-100">
-              <source src="/uploads/<%= song.audioFile %>">
+               <source src="<%= song.audioFile %>">
             </audio>
             <% if(user){ %>
 

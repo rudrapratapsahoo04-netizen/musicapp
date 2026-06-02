@@ -3,6 +3,10 @@ const multer = require("multer");
 const Music = require("../models/Music");
 const auth = require("../middleware/auth");
 
+const { storage } = require("../cloudConfig");
+
+const upload = multer({ storage });
+
 // Storage
 const storage = multer.diskStorage({
   destination: "public/uploads",
@@ -13,23 +17,35 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Add Music Page
-router.get("/add", auth, (req, res) => res.render("addmusic"));
+router.get("/add", auth, (req, res) => {
+  res.render("addmusic");
+});
 
-// Upload music
+
+// Upload Music
 router.post(
   "/add",
   auth,
-  upload.fields([{ name: "audio" }, { name: "thumbnail" }]),
+  upload.fields([
+    { name: "audio" },
+    { name: "thumbnail" }
+  ]),
   async (req, res) => {
+
     const { title, singer, duration } = req.body;
 
     await Music.create({
       title,
       singer,
       duration,
-      audioFile: req.files.audio[0].filename,
-      thumbnail: req.files.thumbnail[0].filename,
-      createdBy: req.session.user._id,
+
+      // Cloudinary URL
+      audioFile: req.files.audio[0].path,
+
+      // Cloudinary URL
+      thumbnail: req.files.thumbnail[0].path,
+
+      createdBy: req.session.user._id
     });
 
     req.flash("success", "Music Uploaded!");
