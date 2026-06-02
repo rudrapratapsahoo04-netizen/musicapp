@@ -1,0 +1,42 @@
+<% layout("boilerplate") %>
+
+<div class="container mt-4">
+
+    <h2 class="fw-bold mb-4"><%= playlist.name %></h2>
+
+    <% if(playlist.songs.length === 0){ %>
+        <p>No songs in this playlist</p>
+    <% } %>
+
+    <div class="row">
+
+        <% playlist.songs.forEach(song => { %>
+
+            <div class="col-md-4">
+
+                <div class="card shadow-sm mb-3">
+
+                    <img src="/uploads/<%= song.thumbnail %>"
+                         class="card-img-top"
+                         style="height:250px; object-fit:cover;">
+
+                    <div class="card-body">
+
+                        <h5><%= song.title %></h5>
+                        <p><%= song.singer %></p>
+
+                        <audio controls class="w-100">
+                            <source src="/uploads/<%= song.audioFile %>">
+                        </audio>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        <% }) %>
+
+    </div>
+
+</div>

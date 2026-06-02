@@ -1,0 +1,52 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  
+}
+
+main {
+    flex: 1;
+}
+
+.footer {
+    margin-top: auto;
+}
+
+/* Music Cards */
+.card {
+    border: none;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Audio Player */
+audio {
+    height: 40px;
+}
+
+footer a{
+    transition: 0.3s;
+}
+
+footer a:hover{
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+.social-icon{
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover{
+    color: cyan;
+    transform: translateY(-4px) scale(1.15);
+}

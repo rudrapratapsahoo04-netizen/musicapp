@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusiApp</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<%- include("partials/navbar") %>
+
+<div class="container mt-5 col-md-6">
+  <div class="card shadow">
+
+    <div class="card-header bg-dark text-light">
+      <h4 class="m-0">Add New Music</h4>
+    </div>
+
+    <div class="card-body">
+      <form action="/music/add" method="POST" enctype="multipart/form-data">
+
+        <label class="form-label">Music Title</label>
+        <input type="text" name="title" class="form-control mb-3" required>
+
+        <label class="form-label">Singer</label>
+        <input type="text" name="singer" class="form-control mb-3" required>
+
+        <label class="form-label">Duration (min)</label>
+        <input type="text" name="duration" class="form-control mb-3" required>
+
+        <label class="form-label">Audio File (mp3)</label>
+        <input type="file" name="audio" class="form-control mb-3" required>
+
+        <label class="form-label">Thumbnail (image)</label>
+        <input type="file" name="thumbnail" class="form-control mb-3" required>
+
+        <button class="btn btn-dark w-100">Upload Music</button>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<%- include("partials/footer") %>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

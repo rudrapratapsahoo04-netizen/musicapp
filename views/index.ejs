@@ -1,0 +1,107 @@
+<% layout("boilerplate") %>
+
+<div class="container mt-4">
+
+  <h2 class="fw-bold mb-4">Musics</h2>
+
+  <div class="row">
+    <% music.forEach(song => { %>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm mb-4 " style="border-radius: 60px;">
+
+          <img src="/uploads/<%= song.thumbnail %>"
+               class="card-img-top " style="height:230px; object-fit:cover;" >
+
+          <div class="card-body">
+
+            <h5><%= song.title %></h5>
+
+            <p>Singer: <%= song.singer %></p>
+
+            <audio controls class="w-100">
+              <source src="/uploads/<%= song.audioFile %>">
+            </audio>
+            <% if(user){ %>
+
+<form action="/playlist/add-song" method="POST">
+
+    <input type="hidden"
+           name="songId"
+           value="<%= song._id %>">
+
+    <select name="playlistId"
+            class="form-select mt-2">
+
+        <% playlists.forEach(p => { %>
+
+            <option value="<%= p._id %>">
+                <%= p.name %>
+            </option>
+
+        <% }) %>
+
+    </select>
+
+    <button class="btn btn-primary mt-2 w-100">
+        Add To Playlist
+    </button>
+
+</form>
+
+<% } %>
+          
+            <div class="d-flex justify-content-between align-items-center mt-3">
+
+    <form action="/music/like/<%= song._id %>" method="POST">
+
+        <button class="btn btn-outline-danger btn-sm">
+
+            ❤️ <%= song.likes.length %>
+
+        </button>
+
+    </form>
+
+
+
+</div>
+
+          </div>
+
+        </div>
+      </div>
+
+    <% }) %>
+  </div>
+
+</div>
+<script>
+const audios = document.querySelectorAll("audio");
+
+audios.forEach((audio, index) => {
+
+    audio.addEventListener("play", () => {
+
+        audios.forEach(other => {
+            if (other !== audio) {
+                other.pause();
+            }
+        });
+
+    });
+
+    audio.addEventListener("ended", () => {
+
+        let nextIndex = index + 1;
+
+        if (nextIndex >= audios.length) {
+            nextIndex = 0;
+        }
+
+        audios[nextIndex].play();
+
+    });
+
+});
+</script>
