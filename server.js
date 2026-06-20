@@ -12,6 +12,7 @@ const engine = require("ejs-mate");
 
 //connect to database
 connectDB();
+console.log("MONGO_URI =", process.env.MONGO_URI);
 
 //middlewares
 app.use(express.json());
@@ -21,6 +22,7 @@ app.engine("ejs", engine);
 app.set("view engine", "ejs");
 app.set('view engine','ejs');
 app.set('views',path.join(__dirname,'views'));
+
 
 //session
 app.use(session({
