@@ -12,7 +12,7 @@ const engine = require("ejs-mate");
 
 //connect to database
 connectDB();
-console.log("MONGO_URI =", process.env.MONGO_URI);
+
 
 //middlewares
 app.use(express.json());
